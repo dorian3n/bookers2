@@ -1,0 +1,35 @@
+<h2>User info</h2>
+
+<!-- エラーメッセージ -->
+<% if @user.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= @user.errors.count %> errors prohibited this obj from being saved:</h2>
+		<ul>
+			<% @user.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
+
+<!--参照して 画像投稿機能を作ろう -->
+
+<%= form_for(@user) do |f| %>
+	<div class="field">
+		<strong>Name</strong>
+		<%= f.text_field :name %>
+	</div>
+
+	<div class="field">
+		<strong>Image</strong>
+		<%= f.attachment_field :profile_image %>
+	</div>
+
+	<div class="field">
+		<strong>Introduction</strong>
+		<%= f.text_area :introduction %>
+	</div>
+
+	<p><%= f.submit " Update User " %></p>
+<% end %>
+

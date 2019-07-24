@@ -1,0 +1,59 @@
+
+
+<!-- エラーメッセージ -->
+<% if @new_book.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= @new_book.errors.count %> errors prohibited this obj from being saved:</h2>
+		<ul>
+			<% @new_book.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
+
+<%= render 'users/list', book: @new_book, user:@user %>
+
+
+	<div class="col-xs-9">
+		<h2>Books detail</h2>
+		<table class="table table-hover table-inverse">
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<!-- 画像と文字にパスをつける -->
+						<%= link_to user_path(@user.id) do%>
+							<span><%=attachment_image_tag @book.user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "50x50" %></span>
+							<p><%= @user.name %></p>
+						<% end %>
+					</td>
+					<td>
+						<span><%= link_to (@book.title), book_path(@book.id) %></span>
+					</td>
+					<td>
+						<span><%= @book.body %></span>
+					</td>
+						<!-- 投稿者のみがEdit Destroyを選択できるようにする -->
+						<% if current_user.id == @book.user_id %>
+					<td>
+						<span><%= link_to " Edit ", edit_book_path(@book.id), class:'btn btn-success' %></span>
+					</td>
+
+					<td>
+						<span>
+							<%= link_to " Destroy ", book_path(@book.id), class:'btn btn-danger', method: :delete, "data-confirm" => "本当に消しますか?" %>
+						</span>
+					</td>
+						<% end %>
+				</tr>
+			</tbody>
+		</table>
+	</div>
